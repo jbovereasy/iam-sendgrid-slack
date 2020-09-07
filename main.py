@@ -35,10 +35,10 @@ def find_active_users():
                     get_days = now - key['CreateDate']
                     user_expire.append(get_days.days)
                     username.append(user["UserName"])
-                    # Checks if there is no tag, append netopssupport
+                    # Checks if there is no tag, append to an email
                     if len(tags["Tags"]) == 0:
                         user_email.append(email)
-                    # Checks if there are tags, but email tag is missing, append netopssupport
+                    # Checks if there are tags, but email tag is missing, append to an email
                     elif not any(v['Key'] == 'Email' or v['Key'] == 'email' for v in tags['Tags']):
                         user_email.append(email)
                     else:
@@ -62,7 +62,7 @@ def send_sendgrid():
     alarm_sched = 59  # 91
 
     sg = sendgrid.SendGridAPIClient(api_key=os.environ.get('SENDGRID_API'))
-    no_reply_email = "iam-expiration-noreply@notifications.warnerbros.com"
+    # no_reply_email = <sendgrid no-reply email>
 
     for i, j, k in zip(username, num_expire, user_email):
         # if j == alert_sched or j == alert_sched + 5 or j == alert_sched + 6:
